@@ -14,7 +14,7 @@ The pipeline follows a structured data lifecycle, transitioning raw data through
 * Nainar Mohideen (Nainar)
 * Wang Her Suen (Tom)
 * Yang Shicong (Shicong)
- 
+
 ## Problem Statements
 
 Olist’s market competitiveness and customer retention are currently threatened by recurring delivery delays across its unified logistics network in Brazil. 
