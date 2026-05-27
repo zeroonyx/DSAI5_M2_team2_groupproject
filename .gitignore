@@ -1,0 +1,10 @@
+/venv
+/.meltano
+.env
+.DS_Store
+output/*.db*
+*.pyc
+.env%
+*.json
+meltano-olist/*.json
+meltano-olist/
