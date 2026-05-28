@@ -116,14 +116,14 @@ graph LR
 
 | WBS Code | Phase / Work Package | Task Description | Technical Deliverable | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **1.0** | **Project Initiation & Schema Setup** | **Foundation and environment configuration** | **Infrastructure Baseline** | **[X]** |
+| **1.0** | **Project Initiation** | **Foundation and environment configuration** | **Infrastructure Baseline** | **[X]** |
 | 1.1 | Environment Setup | Initialize GitHub repository, configure local dbt profiles, and establish active data warehouse connections. | Shared Git repository and active warehouse connection | [X] |
 | 1.2 | Source Data Preparation | Prepare raw operational data tables in Supabase. | [Source Data in Supabase](1.2-supabase-setup.md) | [X] |
 | 1.3 | Topic Selection | Choose and finalize the specific business problem statement from the four proposed Olist tracks. | Delivery Delay Analysis | [X] |
-| **2.0** | **Data Engineering: Medallion Pipeline** | **Building the Bronze, Silver, and Gold data layers** | **Data Engineering Track** | **[ ]** |
-| 2.1 | Meltano Ingestion (Bronze) | Configure Meltano pipelines to extract from Supabase and Load into GCP. | [Meltano EL notebook](2.1-meltano.ipynb) | [X] |
-| 2.2 | dbt Staging Layer (Silver) | Build dbt models to deduplicate records via SQL window functions, clean null values, and standardize basic data types. | Cleaned and deduplicated Silver models | [ ] |
-| 2.3 | dbt Marts Layer (Gold) | Implement Kimball Star Schema frameworks using dbt. Design Fact tables alongside SCD Type 1 and Type 2 Dimension tables. | Optimized dimensional models | [ ] |
+| **2.0** | **Data Pipeline** | **Building the Bronze, Silver, and Gold data layers** | **Data Engineering Track** | **[ ]** |
+| 2.1 | Data Ingestion (Meltano) | Configure Meltano pipelines to extract from Supabase and Load into GCP. | [Meltano EL notebook](2.1-meltano.ipynb) | [X] |
+| 2.2 | Data Warehouse (Star Schema) | Organize data into facts and dimension tables, adopt SCD Type 1 and Type 2 | Optimized dimensional models | [ ] |
+| 2.3 | ELT Pipeline (dbt) |  Transform raw data into organized tables using dbt, remove deduplicate records, clean null values, and standardize basic data types. | dbt | [ ] |
 | 2.4 | Pipeline Testing & Docs | Deploy dbt tests for uniqueness, non null values, and referential integrity while auto generating the data catalog. | Passing test suites and auto generated docs | [ ] |
 | **3.0** | **Exploratory Data Analysis (EDA)** | **Validating quality and extracting analytical trends** | **Analytics Track** | **[ ]** |
 | 3.1 | Data Quality Validation | Execute analytical data profiling scripts to stress test dimensional boundaries and validate engineering logic. | Data health check report | [ ] |
