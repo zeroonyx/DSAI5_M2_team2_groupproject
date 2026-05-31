@@ -44,7 +44,7 @@ Pinpointing these exact failure points will allow the operations team to establi
     'tertiaryColor': '#ffffff'
   } 
 }}%%
-graph LR
+graph TD
     %% Distinct sub level (subgraph) styling
     style Src fill:#eff6ff,stroke:#3b82f6,stroke-width:1.5px;
     style Ingest fill:#fef3c7,stroke:#d97706,stroke-width:1.5px;
@@ -56,7 +56,7 @@ graph LR
 
     %% 1. Source Systems
     subgraph Src [OLTP Data Sources]
-        A[(Operational Database - SUPABASE)]
+        A[(Operational Database)]
     end
 
     %% 2. Ingestion Pipeline
@@ -65,37 +65,38 @@ graph LR
     end
 
     %% 3. Simplified Unified Warehouse
-    subgraph Warehouse [Analytical Storage Engine: OLAP Data Warehouse]
-        C[(Raw Data Landing Zone)]
-        C -->|<font color='#059669'>dbt SQL Compilation</font>| D[dbt Staging Layer]
-        D -->|<font color='#059669'>Kimball Star Schema Framework</font>| E[dbt Marts Layer:<br>SCD Type Logic]
+    subgraph Warehouse [Analytical Storage Engine: GCP]
+    direction LR
+        C[(LandingZone)]
+        C -->|<font color='#059669'>dbt SQL </font>| D[(Staging Layer)]
+        D -->|<font color='#059669'>Kimball Dimension</font>| E[(Data Marts)]
     end
 
     %% 4. Access
     subgraph Serving [Analytical Serving Layer]
-        F[Exploratory Data Analysis & BI Dashboards]
+        F[Exploratory Data Analysis<br>BI Dashboards]
     end
 
-    %% Connections with Protocol and Format (with matching label colors)
-    A -->|<font color='#3b82f6'>Protocol: REST API<br>Format: JSON Stream</font>| B
-    B -->|<font color='#d97706'>Protocol: Database Client Write API<br>Format: Parquet Columnar Storage</font>| C
-    E -->|<font color='#059669'>Protocol: Database Driver Connection<br>Format: Optimized Column Scans</font>| F
+    %% Cross Subgraph Connections pointing directly to the subgraphs
+    Src -->|<font color='#3b82f6'>Protocol: REST API<br>Format: JSON</font>| Ingest
+    Ingest -->|<font color='#d97706'>Protocol: Database API<br>Format: Parquet</font>| Warehouse
+    Warehouse -->|<font color='#059669'>Protocol: Database Driver <br>Format: Columnar</font>| Serving
 
     %% Output
-    F -->|<font color='#7c3aed'>Project Stakeholders</font>| L((Project Stakeholders))
+    Serving -->|<font color='#7c3aed'>Visualization</font>| L([Project Stakeholders])
 
     %% Colored link assignments for clear connection levels
-    %% Connection from Src to Ingest
-    linkStyle 0 stroke:#3b82f6,stroke-width:2px; 
-    %% Connection from Ingest to Warehouse
-    linkStyle 1 stroke:#d97706,stroke-width:2px; 
-    %% Internal Warehouse link
-    linkStyle 2 stroke:#059669,stroke-width:1.5px; 
-    %% Internal Warehouse link
-    linkStyle 3 stroke:#059669,stroke-width:1.5px; 
-    %% Connection from Warehouse to Serving
+    %% Internal Warehouse link (C to D)
+    linkStyle 0 stroke:#059669,stroke-width:1.5px; 
+    %% Internal Warehouse link (D to E)
+    linkStyle 1 stroke:#059669,stroke-width:1.5px; 
+    %% Connection from Src subgraph to Ingest subgraph
+    linkStyle 2 stroke:#3b82f6,stroke-width:2px; 
+    %% Connection from Ingest subgraph to Warehouse subgraph
+    linkStyle 3 stroke:#d97706,stroke-width:2px; 
+    %% Connection from Warehouse subgraph to Serving subgraph
     linkStyle 4 stroke:#059669,stroke-width:2px; 
-    %% Connection from Serving to Stakeholders
+    %% Connection from Serving subgraph to Stakeholders
     linkStyle 5 stroke:#7c3aed,stroke-width:2px;
 ```
 ---
@@ -122,17 +123,15 @@ graph LR
 | 1.3 | Topic Selection | Choose and finalize the specific business problem statement from the four proposed Olist tracks. | Delivery Delay Analysis | [X] |
 | **2.0** | **Data Pipeline** | **Building the Bronze, Silver, and Gold data layers** | **Data Engineering Track** | **[ ]** |
 | 2.1 | Data Ingestion (Meltano) | Configure Meltano pipelines to extract from Supabase and Load into GCP. | [Meltano EL notebook](2.1-meltano.ipynb) | [X] |
-| 2.2 | Data Warehouse (Star Schema) | Organize data into facts and dimension tables, adopt SCD Type 1 and Type 2 | Optimized dimensional models | [ ] |
-| 2.3 | ELT Pipeline (dbt) |  Transform raw data into organized tables using dbt, remove deduplicate records, clean null values, and standardize basic data types. | dbt | [ ] |
-| 2.4 | Pipeline Testing & Docs | Deploy dbt tests for uniqueness, non null values, and referential integrity while auto generating the data catalog. | Passing test suites and auto generated docs | [ ] |
+| 2.2 | Data Warehouse (Star Schema) | Organize data into facts and dimension tables, adopt SCD Type 1 and Type 2 | [Dimension Model](2.2-dimension-model.md)| [X] |
+| 2.3 | Data Mart (dbt) |  Transform raw data into organized tables using dbt, remove deduplicate records, clean null values, and standardize basic data types. | [dbt](2.3-dbt.ipynb) | [ ] |
+| 2.4 | Data Quality Testing | Deploy dbt tests for uniqueness, non null values, and referential integrity while auto generating the data catalog. Execute analytical data profiling scripts to stress test dimensional boundaries and validate engineering logic | Passing test suites and auto generated docs | [ ] |
 | **3.0** | **Exploratory Data Analysis (EDA)** | **Validating quality and extracting analytical trends** | **Analytics Track** | **[ ]** |
-| 3.1 | Data Quality Validation | Execute analytical data profiling scripts to stress test dimensional boundaries and validate engineering logic. | Data health check report | [ ] |
-| 3.2 | Core Statistical Analysis | Investigate data distributions, calculate target metric correlations, and analyze regional behavior variances. | Jupyter Notebooks with baseline metrics | [ ] |
-| 3.3 | Deep Dive Business Insights | Extract actionable intelligence that explicitly answers the core metrics of the chosen problem statement. | Documented analytical insights | [ ] |
-| **4.0** | **Business Intelligence & Delivery** | **Translating data models into stakeholder value** | **Presentation & Interface** | **[ ]** |
-| 4.1 | Interactive Dashboard | Connect the Gold layer star schema using database drivers to construct an interactive analytical interface. | Local Streamlit dashboard application | [ ] |
-| 4.2 | Project Documentation | Finalize the comprehensive GitHub README outlining the system architecture, dbt models, and analytical outcomes. | Polished GitHub repository documentation | [ ] |
-| 4.3 | Stakeholder Presentation | Compile technical data engineering workflows and EDA findings into a deck tailored for project stakeholders. | Final presentation deck | [ ] |
+| 3.1 | Data Analysis | Investigate data distributions, calculate target metric correlations, and analyze regional behavior variances. | SQL Achemy, Jupyter Notebooks with baseline metrics | [ ] |
+| 3.2 | Deep Dive Business Insights | Extract actionable intelligence that explicitly answers the core metrics of the chosen problem statement. | Documented analytical insights | [ ] |
+| **4.0** | **Documentation and Presentation** | **Translating data models into stakeholder value** | **Presentation & Interface** | **[ ]** |
+| 4.1 | Project Documentation | Finalize the comprehensive GitHub README outlining the system architecture, dbt models, and analytical outcomes. | [Project Document](README.md) | [ ] |
+| 4.3 | Stakeholder Presentation | Present architecture and recommendations to executives. | Final presentation deck | [ ] |
 
 ## Important Decisions
 

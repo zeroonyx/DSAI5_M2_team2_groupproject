@@ -6,5 +6,5 @@ output/*.db*
 *.pyc
 .env%
 *.json
-meltano-olist/*.json
 meltano-olist/
+olist_fulfillment_analysis/
