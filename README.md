@@ -127,8 +127,8 @@ graph TD
 | 2.3 | Data Mart (dbt) |  Transform raw data into organized tables using dbt, remove deduplicate records, clean null values, and standardize basic data types. | [dbt](2.3-dbt.ipynb) | [X] |
 | 2.4 | Data Quality Testing | Deploy dbt tests for uniqueness, non null values, and referential integrity while auto generating the data catalog. Execute analytical data profiling scripts to stress test dimensional boundaries and validate engineering logic | [lineage diagram](2.4-dbt-doc.md) | [X] |
 | **3.0** | **Exploratory Data Analysis (EDA)** | **Validating quality and extracting analytical trends** | **Analytics Track** | - |
-| 3.1 | Data Analysis | Investigate data distributions, calculate target metric correlations, and analyze regional behavior variances. | SQL Achemy, Jupyter Notebooks with baseline metrics | [ ] |
-| 3.2 | Deep Dive Business Insights | Extract actionable intelligence that explicitly answers the core metrics of the chosen problem statement. | Documented analytical insights | [ ] |
+| 3.1 | Data Analysis | Investigate data distributions, calculate target metric correlations, and analyze regional behavior variances. | [Jupyter Notebooks](3.1-olist-fulfillment-eda.ipynb) | [X] |
+| 3.2 | Deep Dive Business Insights | Extract actionable intelligence that explicitly answers the core metrics of the chosen problem statement. | [Documented analytical insights](3.2-business-insights.md) | [X] |
 | **4.0** | **Documentation and Presentation** | **Translating data models into stakeholder value** | **Presentation & Interface** | - |
 | 4.1 | Project Documentation | Finalize the comprehensive GitHub README outlining the system architecture, dbt models, and analytical outcomes. | [Project Document](README.md) | [X] |
 | 4.3 | Stakeholder Presentation | Present architecture and recommendations to executives. | Final presentation deck | [ ] |
