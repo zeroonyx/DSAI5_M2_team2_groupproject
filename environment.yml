@@ -1,18 +1,22 @@
-name: elt
+name: elt_bde_eda
 channels:
-  - defaults
   - conda-forge
+  - defaults
 dependencies:
+  - python=3.11.14
+  - pip=25.3
+  - ipykernel=7.1.0
   - dbt-bigquery=1.10.3
   - great-expectations=1.8.0
-  - ipykernel=7.1.0
-  - matplotlib=3.10.7
-  - pandas=2.3.3
-  - pip=25.3
   - pytest=8.4.2
-  - python=3.11.14
+  - pandas=2.3.3
+  - matplotlib=3.10.7
+  - seaborn=0.13.2
   - python-dotenv=1.1.0
   - requests=2.32.5
+  - google-cloud-bigquery  
+  - db-dtypes             
+  - google-cloud-bigquery-storage 
+  - pyarrow                       
   - pip:
       - meltano==4.0.8
-prefix: /home/ds2/miniconda3/envs/elt

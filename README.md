@@ -117,20 +117,20 @@ graph TD
 
 | WBS Code | Phase / Work Package | Task Description | Technical Deliverable | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **1.0** | **Project Initiation** | **Foundation and environment configuration** | **Infrastructure Baseline** | **[X]** |
+| **1.0** | **Project Initiation** | **Foundation and environment configuration** | **Infrastructure Baseline** | - |
 | 1.1 | Environment Setup | Initialize GitHub repository, configure local dbt profiles, and establish active data warehouse connections. | Shared Git repository and active warehouse connection | [X] |
 | 1.2 | Source Data Preparation | Prepare raw operational data tables in Supabase. | [Source Data in Supabase](1.2-supabase-setup.md) | [X] |
 | 1.3 | Topic Selection | Choose and finalize the specific business problem statement from the four proposed Olist tracks. | Delivery Delay Analysis | [X] |
-| **2.0** | **Data Pipeline** | **Building the Bronze, Silver, and Gold data layers** | **Data Engineering Track** | **[ ]** |
+| **2.0** | **Data Pipeline** | **Building the Bronze, Silver, and Gold data layers** | **Data Engineering Track** | - |
 | 2.1 | Data Ingestion (Meltano) | Configure Meltano pipelines to extract from Supabase and Load into GCP. | [Meltano EL notebook](2.1-meltano.ipynb) | [X] |
 | 2.2 | Data Warehouse (Star Schema) | Organize data into facts and dimension tables, adopt SCD Type 1 and Type 2 | [Dimension Model](2.2-dimension-model.md)| [X] |
-| 2.3 | Data Mart (dbt) |  Transform raw data into organized tables using dbt, remove deduplicate records, clean null values, and standardize basic data types. | [dbt](2.3-dbt.ipynb) | [ ] |
-| 2.4 | Data Quality Testing | Deploy dbt tests for uniqueness, non null values, and referential integrity while auto generating the data catalog. Execute analytical data profiling scripts to stress test dimensional boundaries and validate engineering logic | Passing test suites and auto generated docs | [ ] |
-| **3.0** | **Exploratory Data Analysis (EDA)** | **Validating quality and extracting analytical trends** | **Analytics Track** | **[ ]** |
+| 2.3 | Data Mart (dbt) |  Transform raw data into organized tables using dbt, remove deduplicate records, clean null values, and standardize basic data types. | [dbt](2.3-dbt.ipynb) | [X] |
+| 2.4 | Data Quality Testing | Deploy dbt tests for uniqueness, non null values, and referential integrity while auto generating the data catalog. Execute analytical data profiling scripts to stress test dimensional boundaries and validate engineering logic | [lineage diagram](2.4-dbt-doc.md) | [X] |
+| **3.0** | **Exploratory Data Analysis (EDA)** | **Validating quality and extracting analytical trends** | **Analytics Track** | - |
 | 3.1 | Data Analysis | Investigate data distributions, calculate target metric correlations, and analyze regional behavior variances. | SQL Achemy, Jupyter Notebooks with baseline metrics | [ ] |
 | 3.2 | Deep Dive Business Insights | Extract actionable intelligence that explicitly answers the core metrics of the chosen problem statement. | Documented analytical insights | [ ] |
-| **4.0** | **Documentation and Presentation** | **Translating data models into stakeholder value** | **Presentation & Interface** | **[ ]** |
-| 4.1 | Project Documentation | Finalize the comprehensive GitHub README outlining the system architecture, dbt models, and analytical outcomes. | [Project Document](README.md) | [ ] |
+| **4.0** | **Documentation and Presentation** | **Translating data models into stakeholder value** | **Presentation & Interface** | - |
+| 4.1 | Project Documentation | Finalize the comprehensive GitHub README outlining the system architecture, dbt models, and analytical outcomes. | [Project Document](README.md) | [X] |
 | 4.3 | Stakeholder Presentation | Present architecture and recommendations to executives. | Final presentation deck | [ ] |
 
 ## Important Decisions
