@@ -131,7 +131,7 @@ graph TD
 | 3.2 | Deep Dive Business Insights | Extract actionable intelligence that explicitly answers the core metrics of the chosen problem statement. | [Documented analytical insights](3.2-business-insights.md) | [X] |
 | **4.0** | **Documentation and Presentation** | **Translating data models into stakeholder value** | **Presentation & Interface** | - |
 | 4.1 | Project Documentation | Finalize the comprehensive GitHub README outlining the system architecture, dbt models, and analytical outcomes. | [Project Document](README.md) | [X] |
-| 4.3 | Stakeholder Presentation | Present architecture and recommendations to executives. | Final presentation deck | [ ] |
+| 4.3 | Stakeholder Presentation | Present architecture and recommendations to executives. | [Final presentation deck](index.html) | [X] |
 
 
 ## Next Step
