@@ -11,7 +11,7 @@ The pipeline follows a structured data lifecycle, transitioning raw data through
 * Li Zhongyi (Ethan)
 * Lin Minghui (Reeve)
 * Mao Jianwen (Tony)
-* Nainar Mohideen (Nainar)
+* Nainar Mohamed (Nainar)
 * Wang Her Suen (Tom)
 * Yang Shicong (Shicong)
 

@@ -8,3 +8,4 @@ output/*.db*
 *.json
 meltano-olist/
 olist_fulfillment_analysis/
+/assets/bq*
