@@ -140,10 +140,9 @@ def track_memory_timeline():
 # Execute tracking at the start of every single rerun
 mem_df = track_memory_timeline()
 
-st.markdown("#### Free Tier Steamlit has 1GB Memory limit")
-with st.sidebar.expander("App Memory Usage", expanded=True):
+with st.sidebar.expander("App Memory Usage", expanded=False):
     latest_ram = mem_df["RAM Usage (MB)"].iloc[-1]
-    
+    st.markdown("#### Steamlit Free Tier has 1GB Memory limit")
     # Visual warning color indicator based on community limits
     if latest_ram > 800:
         st.error(f"Current RAM: {latest_ram:.1f} MB (Critical)")
