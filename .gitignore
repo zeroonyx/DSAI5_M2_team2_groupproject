@@ -9,3 +9,4 @@ output/*.db*
 meltano-olist/
 olist_fulfillment_analysis/
 /assets/bq*
+.streamlit/
