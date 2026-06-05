@@ -81,11 +81,15 @@ def load_bigquery_data():
         ON f.payment_date_key = d_pay.date_key
         
     WHERE f.order_status = 'delivered'
-    LIMIT 10
     """
     
+    sql_query_sample = """
+    SELECT * FROM `dsai-project-51420.olist_all.sample_order_fulfillment`
+    """
+
     # Executing query and downloading dataframe
-    df = client.query(sql_query).to_dataframe()
+    # df = client.query(sql_query).to_dataframe()
+    df = client.query(sql_query_sample).to_dataframe()
     
     # Enforce clear date types
     df['order_date'] = pd.to_datetime(df['order_date'])
@@ -122,7 +126,8 @@ def track_memory_timeline():
     # 2. Get current system process memory consumption
     process = psutil.Process(os.getpid())
     current_mem_mb = process.memory_info().rss / (1024 * 1024)
-    current_time = datetime.datetime.now()
+    # current_time = datetime.datetime.now()
+    current_time = datetime.datetime.now().strftime("%H:%M:%S")
 
     # 3. Append the newest data point
     st.session_state.memory_history.append({
