@@ -17,6 +17,7 @@ dependencies:
   - google-cloud-bigquery  
   - db-dtypes             
   - google-cloud-bigquery-storage 
+  - psutil>=7.2.2
   - pyarrow                       
   - pip:
       - meltano==4.0.8

@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import datetime
+import os
+import psutil
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
@@ -78,6 +81,7 @@ def load_bigquery_data():
         ON f.payment_date_key = d_pay.date_key
         
     WHERE f.order_status = 'delivered'
+    LIMIT 10
     """
     
     # Executing query and downloading dataframe
@@ -108,6 +112,61 @@ selected_categories = st.sidebar.multiselect(
 
 # Filter dataframe dynamically based on sidebar selections
 filtered_df = df_clean[df_clean['product_category_name'].isin(selected_categories)]
+
+
+def track_memory_timeline():
+    # 1. Initialize the session state list if it doesn't exist
+    if "memory_history" not in st.session_state:
+        st.session_state.memory_history = []
+
+    # 2. Get current system process memory consumption
+    process = psutil.Process(os.getpid())
+    current_mem_mb = process.memory_info().rss / (1024 * 1024)
+    current_time = datetime.datetime.now()
+
+    # 3. Append the newest data point
+    st.session_state.memory_history.append({
+        "Timestamp": current_time,
+        "RAM Usage (MB)": current_mem_mb
+    })
+
+    # 4. Optional: Cap history at the last 100 script reruns to save memory
+    if len(st.session_state.memory_history) > 100:
+        st.session_state.memory_history.pop(0)
+
+    # 5. Convert to a Pandas DataFrame for charting
+    return pd.DataFrame(st.session_state.memory_history)
+
+# Execute tracking at the start of every single rerun
+mem_df = track_memory_timeline()
+
+st.markdown("#### Free Tier Steamlit has 1GB Memory limit")
+with st.sidebar.expander("App Memory Usage", expanded=True):
+    latest_ram = mem_df["RAM Usage (MB)"].iloc[-1]
+    
+    # Visual warning color indicator based on community limits
+    if latest_ram > 800:
+        st.error(f"Current RAM: {latest_ram:.1f} MB (Critical)")
+    elif latest_ram > 500:
+        st.warning(f"Current RAM: {latest_ram:.1f} MB (High)")
+    else:
+        st.success(f"Current RAM: {latest_ram:.1f} MB (Stable)")
+        
+    # Plotting the historical timeline using native Streamlit line charts
+    st.line_chart(
+        data=mem_df, 
+        x="Timestamp", 
+        y="RAM Usage (MB)", 
+        use_container_width=True
+    )
+    
+    # Manual button to let you trigger garbage collection instantly
+    if st.button("Force Clear Python RAM"):
+        import gc
+        st.cache_data.clear() # Wipes out cached BigQuery frames
+        gc.collect()          # Forces Python memory release
+        st.rerun()
+# ------------------------------------
 
 # 4. Dashboard Title layout
 st.title("🚚 Olist Order Fulfillment Analysis")
