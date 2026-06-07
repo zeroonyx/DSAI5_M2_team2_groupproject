@@ -499,26 +499,16 @@ if not summary_df.empty:
     st.divider()
     
     # 7. Fulfillment Distributions Section
-    st.subheader("Fulfillment Distributions")
+    st.subheader("Fulfillment & Operational Variables Analysis")
     col_chart1, col_chart2 = st.columns(2)
     
     with col_chart1:
-        st.markdown("#### Delivery Delay Box Plot Distribution vs SLA Target")
-        cat_groups = summary_df.groupby('product_category_name').agg(
-            p10=('p10_delay', 'mean'), p25=('p25_delay', 'mean'), p50=('p50_delay', 'mean'), p75=('p75_delay', 'mean'), p90=('p90_delay', 'mean')
-        ).reset_index()
-        
-        fig_box = go.Figure()
-        for _, row in cat_groups.iterrows():
-            fig_box.add_trace(go.Box(
-                name=row['product_category_name'],
-                q1=[row['p25']], median=[row['p50']], q3=[row['p75']],
-                lowerfence=[row['p10']], upperfence=[row['p90']],
-                fillcolor=COLOR_PRIMARY_BLUE, line=dict(color=COLOR_DARK_BLUE)
-            ))
-        fig_box.add_hline(y=0, line_dash="dash", line_color=COLOR_ALERT_CRIMSON, annotation_text="SLA Target")
-        fig_box.update_layout(showlegend=False, xaxis_tickangle=-30, template='plotly_white')
-        st.plotly_chart(fig_box, use_container_width=True)
+        st.markdown("#### Operational Variables Correlation Matrix")
+        fig_heat = px.imshow(
+            corr_matrix, text_auto='.2f', color_continuous_scale='Blues', zmin=-1.0, zmax=1.0,
+            template='plotly_white'
+        )
+        st.plotly_chart(fig_heat, use_container_width=True)
         
     with col_chart2:
         st.markdown("#### Total Fulfillment Duration vs Corridor Distance (Bubble Volume Summary)")
@@ -553,18 +543,7 @@ if not summary_df.empty:
 
     st.divider()
 
-    # 9. Correlation Analysis Section
-    st.subheader("🔗 Operational Variables Correlation Matrix")
-    fig_heat = px.imshow(
-        corr_matrix, text_auto='.2f', color_continuous_scale='Blues', zmin=-1.0, zmax=1.0,
-        title='Chart 8: Correlation Matrix: Pre-Calculated Database Variable Pairings',
-        template='plotly_white'
-    )
-    st.plotly_chart(fig_heat, use_container_width=True)
-
-    st.divider()
-
-    # 10. Monthly Order Volume vs. Delivery Delay Percentiles
+    # 9. Monthly Order Volume vs. Delivery Delay Percentiles
     st.subheader("📈 Monthly Performance Tendencies & Percentiles")
         
     summary_df['order_date_clean'] = pd.to_datetime(summary_df['order_date'], errors='coerce')
